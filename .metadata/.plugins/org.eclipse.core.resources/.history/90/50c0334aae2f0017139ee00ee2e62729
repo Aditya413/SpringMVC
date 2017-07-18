@@ -1,0 +1,241 @@
+package core;
+import java.util.*;
+
+
+
+public class demo {
+	//Check first repeating character
+	
+	public static void main(String args[])
+	{
+		
+		System.out.println("Enter string to check first repeating character");
+		
+		Scanner sc = new Scanner(System.in);
+		String word = sc.nextLine();
+		sc.close();
+		demo dm = new demo();
+		char result = dm.CheckFirstRepeating(word.toLowerCase());
+		
+		
+		System.out.println("The First Repeating Character is :"+result);
+		
+		
+		dm.NumOfVowels_Consonants(word.toLowerCase());
+		
+		System.out.println("The Occurence of Each character is :"+dm.CountOccurenceOfChar(word.toLowerCase()));
+		
+		System.out.println("Replaced String is :"+dm.ReplaceWithModulus(word));
+		
+		//System.out.println("Number of Possible Permutation is :");
+		//dm.permutation(word);
+		
+		System.out.println("String is palindrome or not :"+dm.CheckPalindrome(word));
+		
+		dm.RemoveDuplicates(word);
+		
+		System.out.println("The highest occurence of charcter is :"+dm.HighestOccurenceOfChar(word.toLowerCase()));
+		
+		dm.RemoveParticularFromString(word);
+	}
+	
+	public char CheckFirstRepeating(String word){
+		
+		char[] arr = word.toCharArray();
+		Set<Character> unique = new HashSet<Character>();
+		
+		List<Character> duplicate = new ArrayList<Character>();
+		
+			for(int i=0;i<arr.length;i++)
+		{
+			if(!unique.add(arr[i]))
+			{
+				duplicate.add(arr[i]);
+			}	
+		}
+		
+		return duplicate.get(0);
+	
+	}
+	
+	
+	public void NumOfVowels_Consonants(String word){
+		
+		char[] input = word.toCharArray();
+		int vowels=0;
+		int consonants=0;
+		
+		
+		for(char c : input){
+			switch(c){
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
+				vowels++;
+			break;
+			default:
+				consonants++;
+			}
+		}
+		
+		System.out.println("The num of Vowels in "+word+" is :"+vowels);
+		System.out.println("The num of Consonants in "+word+" is: "+consonants);
+	}
+	
+	public HashMap<Character,Integer> CountOccurenceOfChar(String word){
+		HashMap<Character,Integer> occurence = new HashMap<Character,Integer>();
+		char arr[] = word.toCharArray();
+		
+		for(char c : arr){
+			if(occurence.containsKey(c)){
+				occurence.put(c, occurence.get(c)+1);
+			}
+			else{
+				occurence.put(c, 1);
+			}
+		}
+			
+		return occurence;
+	}
+	
+	
+	public String ReplaceWithModulus(String word){
+		
+		StringBuilder str = new StringBuilder();
+		
+		String wordArr[] = word.split(" ");
+		
+		for(int i=0;i<wordArr.length;i++)
+		{
+			str.append(wordArr[i]);
+			str.append("%");
+		}
+		
+		
+		return str.substring(0, str.length()-1).toString();
+	}
+	
+	public void permutation(String word){
+		permutation("",word);
+	}
+	
+	public void permutation(String prefix,String str){
+		int n=str.length();
+		if(n==0){
+			System.out.println(prefix);
+		}
+		else{
+			for(int i=0;i<n;i++){
+				permutation(prefix+str.charAt(i),str.substring(0, i)+str.substring(i+1, n));
+			}
+		}
+	}
+	
+	public boolean CheckPalindrome(String word){
+		
+		String reverse="";
+		
+		for(int i=word.length()-1;i>=0;i--)
+		{
+			reverse+=word.charAt(i);
+		}
+		
+		if(reverse.equals(word)){
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	public void RemoveDuplicates(String word){
+		char arr[] = word.toCharArray();
+		
+		Arrays.sort(arr);
+		char previous = arr[0];
+		char[] result = new char[arr.length];
+		for(int i=1;i<arr.length;i++)
+		{
+			if(previous!=arr[i])
+			{
+				result[i]=arr[i];
+			}
+			
+			previous=arr[i];
+		}
+		
+		String Uniques= new String(result);
+		
+		System.out.println("After Removing Duplicates : "+Uniques.trim());
+	}
+	
+	public List<Character> HighestOccurenceOfChar(String word){
+		HashMap<Character,Integer> occurence = new HashMap<Character,Integer>();
+		List<Character> highestOccurence = new ArrayList<>();
+		char arr[] = word.toCharArray();
+		int maximum=0;
+		for(char c : arr){
+			if(occurence.containsKey(c)){
+				occurence.put(c, occurence.get(c)+1);
+			}
+			else{
+				occurence.put(c, 1);
+			}
+			
+			if(occurence.get(c)>maximum){
+				maximum = occurence.get(c);
+			}
+		}
+		
+		 for(HashMap.Entry<Character, Integer> val : occurence.entrySet()){
+			 if(val.getValue()==maximum){
+				 highestOccurence.add(val.getKey());
+			 }
+		 }
+		
+		return highestOccurence;
+	}
+	
+	public void RemoveParticularFromString(String word){
+		String fullname="Aditya Bhatnagar";
+		String NewName = "";
+		if(fullname.contains(word)){
+			NewName = fullname.replace(word, "");
+		}
+		
+		System.out.println("The New Name is :"+NewName.trim());
+	}
+	
+	static public String intermediatePalindrome(String s, int left, int right) {
+		if (left > right) return null;
+		while (left >= 0 && right < s.length()
+				&& s.charAt(left) == s.charAt(right)) {
+			left--;
+			right++;
+		}
+		return s.substring(left + 1, right);
+	}
+
+	// O(n^2)
+	public static String longestPalindromeString(String s) {
+		if (s == null) return null;
+		String longest = s.substring(0, 1);
+		for (int i = 0; i < s.length() - 1; i++) {
+			//odd cases like 121
+			String palindrome = intermediatePalindrome(s, i, i);
+			if (palindrome.length() > longest.length()) {
+				longest = palindrome;
+			}
+			//even cases like 1221
+			palindrome = intermediatePalindrome(s, i, i + 1);
+			if (palindrome.length() > longest.length()) {
+				longest = palindrome;
+			}
+		}
+		return longest;
+	}
+}

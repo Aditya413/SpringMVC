@@ -1,0 +1,7 @@
+package core;
+
+@RestController
+@RequestMapping(value="/users")
+public class UserController {
+
+}

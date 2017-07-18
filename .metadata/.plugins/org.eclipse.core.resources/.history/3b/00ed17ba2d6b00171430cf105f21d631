@@ -1,0 +1,67 @@
+package core.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import core.entities.UserAndContactModel;
+import core.entities.UserDetailModel;
+
+@Component
+public class UserDao {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	public List<UserDetailModel> getUserData(){
+		Session session = this.sessionFactory.openSession();
+		Criteria cr = session.createCriteria(UserDetailModel.class);
+
+		List<UserDetailModel> userdetailmodel = new ArrayList<UserDetailModel>();
+
+		try {
+
+			userdetailmodel = cr.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			session.close();  
+		}
+		
+		return userdetailmodel;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UserAndContactModel> getUserAndContact(){
+		Session session = this.sessionFactory.openSession();
+		Criteria cr = session.createCriteria(UserAndContactModel.class);
+
+		List<UserAndContactModel> userandcontactmodel = new ArrayList<UserAndContactModel>();
+
+		try {
+
+			userandcontactmodel = cr.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			session.close();  
+		}
+		
+		return userandcontactmodel;
+	}
+}

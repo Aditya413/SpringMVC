@@ -1,0 +1,18 @@
+package core;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="public.user_details")
+public class UserDetailModel {
+	private long user_id;
+	private String user_firstname;
+	private String user_lastname;
+	private int user_age;
+	private String user_email;
+	private String user_country;
+	
+	
+}

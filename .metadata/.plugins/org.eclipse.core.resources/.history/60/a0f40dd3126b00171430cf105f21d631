@@ -1,0 +1,15 @@
+create table public.user_details(
+	user_id serial NOT NULL unique, 
+	user_firstname character varying(100), 
+	user_lastname  character varying(100), 
+	user_age integer NOT NULL DEFAULT 0, 
+	user_email character varying(50), 
+	user_country character varying(100)
+	)
+
+create table public.user_contact_details(
+	user_id integer references user_details(user_id), 
+	contact_id serial NOT NULL, 
+	phone_number character varying(20), 
+	comments character varying(200)
+	)

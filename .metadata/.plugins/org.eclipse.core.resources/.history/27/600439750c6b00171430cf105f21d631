@@ -1,0 +1,15 @@
+package core.dao;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class UserDao {
+	  @Autowired
+	  SessionFactory session;
+	  
+	  SessionFactory factory;
+	  
+	  UserDao(SessionFactory factory){
+		  factory = this.session;
+	  }
+}

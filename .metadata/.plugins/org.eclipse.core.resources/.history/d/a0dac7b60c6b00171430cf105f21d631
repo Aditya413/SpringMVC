@@ -1,0 +1,42 @@
+package core.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import core.UserDetailModel;
+
+public class UserDao {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+
+
+	@SuppressWarnings("unchecked")
+	public List<UserDetailModel> getUserDeta(){
+		Session session = this.sessionFactory.openSession();
+		Criteria cr = session.createCriteria(UserDetailModel.class);
+
+		List<UserDetailModel> userdetailmodel = new ArrayList<UserDetailModel>();
+
+		try {
+
+			userdetailmodel = cr.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			session.close();  
+		}
+	}
+}
